@@ -1,16 +1,4 @@
-# horoscope_for_the_day
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+=======
+# Horoscope-for-the-day
+A Flutter app to display daily horoscopes based on zodiac signs
+>>>>>>> 6203ddeaa8ca63b4a2ab25aa1ffde565d2f6e44d
