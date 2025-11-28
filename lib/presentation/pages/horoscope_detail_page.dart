@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:horoscope_for_the_day/services/horoscope_service.dart';
 
-class HoroscopeDetailPage extends StatelessWidget {
+class HoroscopeDetailPage extends StatefulWidget {
   // Ожидаем получить знак зодиака
   final String zodiacSign;
 
@@ -9,29 +10,78 @@ class HoroscopeDetailPage extends StatelessWidget {
     : super(key: key);
 
   @override
+  State<HoroscopeDetailPage> createState() => _HoroscopeDetailPageState();
+}
+
+class _HoroscopeDetailPageState extends State<HoroscopeDetailPage> {
+  late Future<String>
+  _horoscopeFuture; // Хранилище для нашего будущего (данных)
+  final HoroscopeService _service = HoroscopeService();
+
+  @override
+  void initState() {
+    super.initState();
+    // При инициализации состояния, запускаем загрузку данных
+    _horoscopeFuture = _service.fetchHoroscope(widget.zodiacSign);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Horoscope for $zodiacSign'),
+        title: Text('Horoscope for ${widget.zodiacSign}'),
         centerTitle: true,
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Your horoscope for $zodiacSign',
-                style: const TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
+        child: FutureBuilder<String>(
+          future: _horoscopeFuture, // Какое асинхронное событие мы ждем
+          builder: (context, snapshot) {
+            // 1. Если данные еще загружаются (ожидание)
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator(
+                strokeWidth: 3.0,
+              ); // Показываем спиннер
+            }
+
+            // 2. Если произошла ошибка
+            if (snapshot.hasError) {
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text('Ошибка загрузки: ${snapshot.error}'),
+              );
+            }
+
+            // 3. Если данные загружены успешно (snapshot.hasData == true)
+            if (snapshot.hasData) {
+              return SingleChildScrollView(
+                // Используем SingleChildScrollView, если текст может быть длинным
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Horoscope for ${widget.zodiacSign}:',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 30),
+                    Text(
+                      snapshot.data!, // Отображаем полученный текст гороскопа
+                      style: const TextStyle(fontSize: 18, height: 1.5),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ],
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20.0),
-            ],
-          ),
+              );
+            }
+
+            // 4. Если нет данных и нет ошибки (крайне редкий случай)
+            return const Text('No horoscope data available.');
+          },
         ),
       ),
     );

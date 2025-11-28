@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'Horoscope for the day',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: const Color.fromARGB(255, 157, 114, 232),
+        primaryColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const HomePage(),
