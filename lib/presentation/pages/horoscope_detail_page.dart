@@ -29,9 +29,14 @@ class _HoroscopeDetailPageState extends State<HoroscopeDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Horoscope for ${widget.zodiacSign}'),
+        title: Text(
+          '',
+          style: TextStyle(color: Color.fromARGB(255, 219, 140, 229)),
+        ),
         centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 22, 7, 34),
       ),
+      backgroundColor: const Color.fromARGB(255, 22, 7, 34),
       body: Center(
         child: FutureBuilder<String>(
           future: _horoscopeFuture, // Какое асинхронное событие мы ждем
@@ -61,17 +66,22 @@ class _HoroscopeDetailPageState extends State<HoroscopeDetailPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Horoscope for ${widget.zodiacSign}:',
+                      'Гороскоп для знака зодиака ${widget.zodiacSign}:',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 219, 140, 229),
                       ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 30),
                     Text(
                       snapshot.data!, // Отображаем полученный текст гороскопа
-                      style: const TextStyle(fontSize: 18, height: 1.5),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        height: 1.5,
+                        color: Color.fromARGB(255, 219, 140, 229),
+                      ),
                       textAlign: TextAlign.justify,
                     ),
                   ],

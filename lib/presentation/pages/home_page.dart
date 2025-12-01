@@ -51,7 +51,7 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     //                   crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildZodiacButton(context: context, zodiacSign: 'Aries'),
+                      _buildZodiacButton(context: context, zodiacSign: 'Овен'),
                       _buildZodiacButton(context: context, zodiacSign: 'Телец'),
                       _buildZodiacButton(
                         context: context,
