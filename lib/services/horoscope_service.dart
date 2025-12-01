@@ -5,24 +5,9 @@ class HoroscopeService {
   static const String _baseUrl = 'https://api-ninjas.com/api/horoscope';
   static const String _apiKey = 'gq4cOTQOoTtUqPMkHC+bqQ==tF98Aau1LifrLep8';
 
-  Map<String, String> zodiacTranslations = {
-    'овен': 'aries',
-    'телец': 'taurus',
-    'близнецы': 'gemini',
-    'рак': 'cancer',
-    'лев': 'leo',
-    'дева': 'virgo',
-    'весы': 'libra',
-    'скорпион': 'scorpio',
-    'стрелец': 'sagittarius',
-    'козерог': 'capricorn',
-    'водолей': 'aquarius',
-    'рыбы': 'pisces',
-  };
-
   Future<String> fetchHoroscope(String zodiacSign) async {
     final String url =
-        'https://api.api-ninjas.com/v1/horoscope?zodiac=${zodiacTranslations[zodiacSign.toLowerCase()]}';
+        'https://api.api-ninjas.com/v1/horoscope?zodiac=${zodiacSign.toLowerCase()}';
 
     try {
       final response = await http.get(

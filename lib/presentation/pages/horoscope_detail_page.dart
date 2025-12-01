@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:horoscope_for_the_day/services/horoscope_service.dart';
+import 'package:intl/intl.dart';
 
 class HoroscopeDetailPage extends StatefulWidget {
   // Ожидаем получить знак зодиака
@@ -30,21 +31,29 @@ class _HoroscopeDetailPageState extends State<HoroscopeDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '',
-          style: TextStyle(color: Color.fromARGB(255, 219, 140, 229)),
+          'Horoscope for ${widget.zodiacSign}',
+          style: TextStyle(color: Color.fromARGB(255, 244, 240, 245)),
         ),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 22, 7, 34),
+        backgroundColor: Colors.black,
       ),
-      backgroundColor: const Color.fromARGB(255, 22, 7, 34),
-      body: Center(
+      //backgroundColor: const Color.fromARGB(255, 22, 7, 34),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/sky.jpg'), // путь к вашему изображению
+            fit: BoxFit.cover, // изображение покрывает весь экран
+          ),
+        ),
         child: FutureBuilder<String>(
           future: _horoscopeFuture, // Какое асинхронное событие мы ждем
           builder: (context, snapshot) {
             // 1. Если данные еще загружаются (ожидание)
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator(
-                strokeWidth: 3.0,
+              return Center(
+                child: CircularProgressIndicator(strokeWidth: 3.0),
               ); // Показываем спиннер
             }
 
@@ -65,12 +74,18 @@ class _HoroscopeDetailPageState extends State<HoroscopeDetailPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    Image.asset(
+                      'assets/${widget.zodiacSign.toLowerCase()}.jpg',
+                      width: 300, // можно задать размер
+                      height: 300,
+                    ),
+                    const SizedBox(height: 20),
                     Text(
-                      'Гороскоп для знака зодиака ${widget.zodiacSign}:',
+                      '${DateFormat('d MMMM yyyy').format(DateTime.now())}',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 219, 140, 229),
+                        color: Color.fromARGB(255, 244, 240, 245),
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -80,7 +95,7 @@ class _HoroscopeDetailPageState extends State<HoroscopeDetailPage> {
                       style: const TextStyle(
                         fontSize: 18,
                         height: 1.5,
-                        color: Color.fromARGB(255, 219, 140, 229),
+                        color: Color.fromARGB(255, 244, 240, 245),
                       ),
                       textAlign: TextAlign.justify,
                     ),

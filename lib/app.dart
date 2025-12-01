@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const HomePage(),
+      home: HomePage(),
       routes: {
         'horoscope-detail': (context) {
           // Получаем аргументы, переданные при вызове Navigator.pushNamed
