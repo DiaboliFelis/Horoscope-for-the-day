@@ -1,26 +1,5 @@
 import 'package:flutter/material.dart';
-
-Widget _buildZodiacButton({
-  required BuildContext context,
-  required String zodiacSign,
-}) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0),
-    child: ElevatedButton(
-      onPressed: () {
-        Navigator.pushNamed(
-          context,
-          'horoscope-detail',
-          arguments: {'zodiacSign': zodiacSign},
-        );
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Color.fromARGB(255, 244, 240, 245),
-      ),
-      child: Text(zodiacSign, style: TextStyle(color: Colors.black)),
-    ),
-  );
-}
+import 'package:horoscope_for_the_day/presentation/pages/Home_page/widgets/buildZodiacButton.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -32,6 +11,21 @@ class _HomePageState extends State<HomePage> {
   String? selectedMonth;
   int? selectedYear;
   String? zodiacSign;
+
+  final List<String> zodiacSigns = [
+    'Aries',
+    'Taurus',
+    'Gemini',
+    'Cancer',
+    'Leo',
+    'Virgo',
+    'Libra',
+    'Scorpio',
+    'Sagittarius',
+    'Capricorn',
+    'Aquarius',
+    'Pisces',
+  ];
 
   final List<int> days = List<int>.generate(31, (i) => i + 1);
   final List<String> months = [
@@ -130,54 +124,59 @@ class _HomePageState extends State<HomePage> {
           children: [
             const SizedBox(height: 10.0),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: Column(
-                    children: [
-                      _buildZodiacButton(context: context, zodiacSign: 'Aries'),
-                      _buildZodiacButton(
-                        context: context,
-                        zodiacSign: 'Taurus',
-                      ),
-                      _buildZodiacButton(
-                        context: context,
-                        zodiacSign: 'Gemini',
-                      ),
-                      _buildZodiacButton(
-                        context: context,
-                        zodiacSign: 'Cancer',
-                      ),
-                      _buildZodiacButton(context: context, zodiacSign: 'Leo'),
-                      _buildZodiacButton(context: context, zodiacSign: 'Virgo'),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      _buildZodiacButton(context: context, zodiacSign: 'Libra'),
-                      _buildZodiacButton(
-                        context: context,
-                        zodiacSign: 'Scorpio',
-                      ),
-                      _buildZodiacButton(
-                        context: context,
-                        zodiacSign: 'Sagittarius',
-                      ),
-                      _buildZodiacButton(
-                        context: context,
-                        zodiacSign: 'Capricorn',
-                      ),
-                      _buildZodiacButton(
-                        context: context,
-                        zodiacSign: 'Aquarius',
-                      ),
-                      _buildZodiacButton(
-                        context: context,
-                        zodiacSign: 'Pisces',
-                      ),
-                    ],
+                    children: List.generate((zodiacSigns.length / 2).ceil(), (
+                      index,
+                    ) {
+                      int firstIndex = index * 2;
+                      int secondIndex = firstIndex + 1;
+
+                      return Row(
+                        children: [
+                          // Первая кнопка
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  'horoscope-detail',
+                                  arguments: {
+                                    'zodiacSign': zodiacSigns[firstIndex],
+                                  },
+                                );
+                              },
+                              child: Text(
+                                zodiacSigns[firstIndex],
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8), // отступ между кнопками
+                          // Вторая кнопка (если есть)
+                          if (secondIndex < zodiacSigns.length)
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    'horoscope-detail',
+                                    arguments: {
+                                      'zodiacSign': zodiacSigns[secondIndex],
+                                    },
+                                  );
+                                },
+                                child: Text(
+                                  zodiacSigns[secondIndex],
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                        ],
+                      );
+                    }),
                   ),
                 ),
               ],
